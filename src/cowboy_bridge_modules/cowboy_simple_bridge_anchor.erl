@@ -84,7 +84,7 @@ massage_reply({reply, {Type, Data}, NewState}, Req, WSState)
         when Type==binary orelse Type==text ->
     {reply, {Type, unicode:characters_to_binary(Data)}, Req, WSState#ws_state{state=NewState}};
 massage_reply({reply, List, NewState}, Req, WSState) ->
-    FixedList = [{Type, iolist_to_binary(Data)} || {Type, Data} <- List],
+    FixedList = [{Type, unicode:characters_to_binary(Data)} || {Type, Data} <- List],
     {reply, FixedList, Req, WSState#ws_state{state=NewState}};
 massage_reply({reply, Reply}, Req, WSState) ->
     massage_reply({reply, Reply, WSState#ws_state.state}, Req, WSState);
